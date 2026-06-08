@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GerenteSessoesRouteImport } from './routes/gerente.sessoes'
+import { Route as GerenteFinancasRouteImport } from './routes/gerente.financas'
 import { Route as GerenteDashboardRouteImport } from './routes/gerente.dashboard'
 import { Route as AtendenteMaquinasRouteImport } from './routes/atendente.maquinas'
 import { Route as AtendenteFilaRouteImport } from './routes/atendente.fila'
@@ -25,6 +27,16 @@ const LoginRoute = LoginRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerenteSessoesRoute = GerenteSessoesRouteImport.update({
+  id: '/gerente/sessoes',
+  path: '/gerente/sessoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerenteFinancasRoute = GerenteFinancasRouteImport.update({
+  id: '/gerente/financas',
+  path: '/gerente/financas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GerenteDashboardRoute = GerenteDashboardRouteImport.update({
@@ -61,6 +73,8 @@ export interface FileRoutesByFullPath {
   '/atendente/fila': typeof AtendenteFilaRoute
   '/atendente/maquinas': typeof AtendenteMaquinasRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
+  '/gerente/financas': typeof GerenteFinancasRoute
+  '/gerente/sessoes': typeof GerenteSessoesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +84,8 @@ export interface FileRoutesByTo {
   '/atendente/fila': typeof AtendenteFilaRoute
   '/atendente/maquinas': typeof AtendenteMaquinasRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
+  '/gerente/financas': typeof GerenteFinancasRoute
+  '/gerente/sessoes': typeof GerenteSessoesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +96,8 @@ export interface FileRoutesById {
   '/atendente/fila': typeof AtendenteFilaRoute
   '/atendente/maquinas': typeof AtendenteMaquinasRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
+  '/gerente/financas': typeof GerenteFinancasRoute
+  '/gerente/sessoes': typeof GerenteSessoesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +109,8 @@ export interface FileRouteTypes {
     | '/atendente/fila'
     | '/atendente/maquinas'
     | '/gerente/dashboard'
+    | '/gerente/financas'
+    | '/gerente/sessoes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +120,8 @@ export interface FileRouteTypes {
     | '/atendente/fila'
     | '/atendente/maquinas'
     | '/gerente/dashboard'
+    | '/gerente/financas'
+    | '/gerente/sessoes'
   id:
     | '__root__'
     | '/'
@@ -109,6 +131,8 @@ export interface FileRouteTypes {
     | '/atendente/fila'
     | '/atendente/maquinas'
     | '/gerente/dashboard'
+    | '/gerente/financas'
+    | '/gerente/sessoes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +143,8 @@ export interface RootRouteChildren {
   AtendenteFilaRoute: typeof AtendenteFilaRoute
   AtendenteMaquinasRoute: typeof AtendenteMaquinasRoute
   GerenteDashboardRoute: typeof GerenteDashboardRoute
+  GerenteFinancasRoute: typeof GerenteFinancasRoute
+  GerenteSessoesRoute: typeof GerenteSessoesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -135,6 +161,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerente/sessoes': {
+      id: '/gerente/sessoes'
+      path: '/gerente/sessoes'
+      fullPath: '/gerente/sessoes'
+      preLoaderRoute: typeof GerenteSessoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerente/financas': {
+      id: '/gerente/financas'
+      path: '/gerente/financas'
+      fullPath: '/gerente/financas'
+      preLoaderRoute: typeof GerenteFinancasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gerente/dashboard': {
@@ -183,6 +223,8 @@ const rootRouteChildren: RootRouteChildren = {
   AtendenteFilaRoute: AtendenteFilaRoute,
   AtendenteMaquinasRoute: AtendenteMaquinasRoute,
   GerenteDashboardRoute: GerenteDashboardRoute,
+  GerenteFinancasRoute: GerenteFinancasRoute,
+  GerenteSessoesRoute: GerenteSessoesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

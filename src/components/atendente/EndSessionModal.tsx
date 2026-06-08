@@ -52,7 +52,7 @@ export function EndSessionModal({
         if ((session.customer.saldo ?? 0) < valor) { toast.error("Saldo insuficiente."); setBusy(false); return; }
         const { error: cErr } = await supabase
           .from("customers")
-          .update({ saldo: session.customer.saldo - valor, total_gasto: undefined as any })
+          .update({ saldo: session.customer.saldo - valor })
           .eq("id", session.customer.id);
         if (cErr) throw cErr;
       }
@@ -81,8 +81,6 @@ export function EndSessionModal({
       });
 
       if (session.customer) {
-        // best-effort update of total_gasto and pontos
-        await supabase.rpc as any; // noop placeholder
         const { data: c } = await supabase.from("customers").select("total_gasto, pontos").eq("id", session.customer.id).maybeSingle();
         if (c) {
           await supabase

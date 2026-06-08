@@ -12,7 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GerenteDashboardRouteImport } from './routes/gerente.dashboard'
+import { Route as AtendenteMaquinasRouteImport } from './routes/atendente.maquinas'
+import { Route as AtendenteFilaRouteImport } from './routes/atendente.fila'
 import { Route as AtendenteDashboardRouteImport } from './routes/atendente.dashboard'
+import { Route as AtendenteClientesRouteImport } from './routes/atendente.clientes'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -29,48 +32,92 @@ const GerenteDashboardRoute = GerenteDashboardRouteImport.update({
   path: '/gerente/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtendenteMaquinasRoute = AtendenteMaquinasRouteImport.update({
+  id: '/atendente/maquinas',
+  path: '/atendente/maquinas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtendenteFilaRoute = AtendenteFilaRouteImport.update({
+  id: '/atendente/fila',
+  path: '/atendente/fila',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AtendenteDashboardRoute = AtendenteDashboardRouteImport.update({
   id: '/atendente/dashboard',
   path: '/atendente/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtendenteClientesRoute = AtendenteClientesRouteImport.update({
+  id: '/atendente/clientes',
+  path: '/atendente/clientes',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/atendente/clientes': typeof AtendenteClientesRoute
   '/atendente/dashboard': typeof AtendenteDashboardRoute
+  '/atendente/fila': typeof AtendenteFilaRoute
+  '/atendente/maquinas': typeof AtendenteMaquinasRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/atendente/clientes': typeof AtendenteClientesRoute
   '/atendente/dashboard': typeof AtendenteDashboardRoute
+  '/atendente/fila': typeof AtendenteFilaRoute
+  '/atendente/maquinas': typeof AtendenteMaquinasRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/atendente/clientes': typeof AtendenteClientesRoute
   '/atendente/dashboard': typeof AtendenteDashboardRoute
+  '/atendente/fila': typeof AtendenteFilaRoute
+  '/atendente/maquinas': typeof AtendenteMaquinasRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/atendente/dashboard' | '/gerente/dashboard'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/atendente/clientes'
+    | '/atendente/dashboard'
+    | '/atendente/fila'
+    | '/atendente/maquinas'
+    | '/gerente/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/atendente/dashboard' | '/gerente/dashboard'
+  to:
+    | '/'
+    | '/login'
+    | '/atendente/clientes'
+    | '/atendente/dashboard'
+    | '/atendente/fila'
+    | '/atendente/maquinas'
+    | '/gerente/dashboard'
   id:
     | '__root__'
     | '/'
     | '/login'
+    | '/atendente/clientes'
     | '/atendente/dashboard'
+    | '/atendente/fila'
+    | '/atendente/maquinas'
     | '/gerente/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  AtendenteClientesRoute: typeof AtendenteClientesRoute
   AtendenteDashboardRoute: typeof AtendenteDashboardRoute
+  AtendenteFilaRoute: typeof AtendenteFilaRoute
+  AtendenteMaquinasRoute: typeof AtendenteMaquinasRoute
   GerenteDashboardRoute: typeof GerenteDashboardRoute
 }
 
@@ -97,11 +144,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GerenteDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atendente/maquinas': {
+      id: '/atendente/maquinas'
+      path: '/atendente/maquinas'
+      fullPath: '/atendente/maquinas'
+      preLoaderRoute: typeof AtendenteMaquinasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atendente/fila': {
+      id: '/atendente/fila'
+      path: '/atendente/fila'
+      fullPath: '/atendente/fila'
+      preLoaderRoute: typeof AtendenteFilaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/atendente/dashboard': {
       id: '/atendente/dashboard'
       path: '/atendente/dashboard'
       fullPath: '/atendente/dashboard'
       preLoaderRoute: typeof AtendenteDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atendente/clientes': {
+      id: '/atendente/clientes'
+      path: '/atendente/clientes'
+      fullPath: '/atendente/clientes'
+      preLoaderRoute: typeof AtendenteClientesRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -110,7 +178,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  AtendenteClientesRoute: AtendenteClientesRoute,
   AtendenteDashboardRoute: AtendenteDashboardRoute,
+  AtendenteFilaRoute: AtendenteFilaRoute,
+  AtendenteMaquinasRoute: AtendenteMaquinasRoute,
   GerenteDashboardRoute: GerenteDashboardRoute,
 }
 export const routeTree = rootRouteImport

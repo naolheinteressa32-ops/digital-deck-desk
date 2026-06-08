@@ -12,8 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GerenteSessoesRouteImport } from './routes/gerente.sessoes'
+import { Route as GerenteRelatoriosRouteImport } from './routes/gerente.relatorios'
+import { Route as GerentePromocoesRouteImport } from './routes/gerente.promocoes'
+import { Route as GerenteMaquinasRouteImport } from './routes/gerente.maquinas'
+import { Route as GerenteHistoricoRouteImport } from './routes/gerente.historico'
+import { Route as GerenteFuncionariosRouteImport } from './routes/gerente.funcionarios'
 import { Route as GerenteFinancasRouteImport } from './routes/gerente.financas'
 import { Route as GerenteDashboardRouteImport } from './routes/gerente.dashboard'
+import { Route as GerenteClientesRouteImport } from './routes/gerente.clientes'
 import { Route as AtendenteMaquinasRouteImport } from './routes/atendente.maquinas'
 import { Route as AtendenteFilaRouteImport } from './routes/atendente.fila'
 import { Route as AtendenteDashboardRouteImport } from './routes/atendente.dashboard'
@@ -34,6 +40,31 @@ const GerenteSessoesRoute = GerenteSessoesRouteImport.update({
   path: '/gerente/sessoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GerenteRelatoriosRoute = GerenteRelatoriosRouteImport.update({
+  id: '/gerente/relatorios',
+  path: '/gerente/relatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerentePromocoesRoute = GerentePromocoesRouteImport.update({
+  id: '/gerente/promocoes',
+  path: '/gerente/promocoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerenteMaquinasRoute = GerenteMaquinasRouteImport.update({
+  id: '/gerente/maquinas',
+  path: '/gerente/maquinas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerenteHistoricoRoute = GerenteHistoricoRouteImport.update({
+  id: '/gerente/historico',
+  path: '/gerente/historico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerenteFuncionariosRoute = GerenteFuncionariosRouteImport.update({
+  id: '/gerente/funcionarios',
+  path: '/gerente/funcionarios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GerenteFinancasRoute = GerenteFinancasRouteImport.update({
   id: '/gerente/financas',
   path: '/gerente/financas',
@@ -42,6 +73,11 @@ const GerenteFinancasRoute = GerenteFinancasRouteImport.update({
 const GerenteDashboardRoute = GerenteDashboardRouteImport.update({
   id: '/gerente/dashboard',
   path: '/gerente/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerenteClientesRoute = GerenteClientesRouteImport.update({
+  id: '/gerente/clientes',
+  path: '/gerente/clientes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AtendenteMaquinasRoute = AtendenteMaquinasRouteImport.update({
@@ -72,8 +108,14 @@ export interface FileRoutesByFullPath {
   '/atendente/dashboard': typeof AtendenteDashboardRoute
   '/atendente/fila': typeof AtendenteFilaRoute
   '/atendente/maquinas': typeof AtendenteMaquinasRoute
+  '/gerente/clientes': typeof GerenteClientesRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
   '/gerente/financas': typeof GerenteFinancasRoute
+  '/gerente/funcionarios': typeof GerenteFuncionariosRoute
+  '/gerente/historico': typeof GerenteHistoricoRoute
+  '/gerente/maquinas': typeof GerenteMaquinasRoute
+  '/gerente/promocoes': typeof GerentePromocoesRoute
+  '/gerente/relatorios': typeof GerenteRelatoriosRoute
   '/gerente/sessoes': typeof GerenteSessoesRoute
 }
 export interface FileRoutesByTo {
@@ -83,8 +125,14 @@ export interface FileRoutesByTo {
   '/atendente/dashboard': typeof AtendenteDashboardRoute
   '/atendente/fila': typeof AtendenteFilaRoute
   '/atendente/maquinas': typeof AtendenteMaquinasRoute
+  '/gerente/clientes': typeof GerenteClientesRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
   '/gerente/financas': typeof GerenteFinancasRoute
+  '/gerente/funcionarios': typeof GerenteFuncionariosRoute
+  '/gerente/historico': typeof GerenteHistoricoRoute
+  '/gerente/maquinas': typeof GerenteMaquinasRoute
+  '/gerente/promocoes': typeof GerentePromocoesRoute
+  '/gerente/relatorios': typeof GerenteRelatoriosRoute
   '/gerente/sessoes': typeof GerenteSessoesRoute
 }
 export interface FileRoutesById {
@@ -95,8 +143,14 @@ export interface FileRoutesById {
   '/atendente/dashboard': typeof AtendenteDashboardRoute
   '/atendente/fila': typeof AtendenteFilaRoute
   '/atendente/maquinas': typeof AtendenteMaquinasRoute
+  '/gerente/clientes': typeof GerenteClientesRoute
   '/gerente/dashboard': typeof GerenteDashboardRoute
   '/gerente/financas': typeof GerenteFinancasRoute
+  '/gerente/funcionarios': typeof GerenteFuncionariosRoute
+  '/gerente/historico': typeof GerenteHistoricoRoute
+  '/gerente/maquinas': typeof GerenteMaquinasRoute
+  '/gerente/promocoes': typeof GerentePromocoesRoute
+  '/gerente/relatorios': typeof GerenteRelatoriosRoute
   '/gerente/sessoes': typeof GerenteSessoesRoute
 }
 export interface FileRouteTypes {
@@ -108,8 +162,14 @@ export interface FileRouteTypes {
     | '/atendente/dashboard'
     | '/atendente/fila'
     | '/atendente/maquinas'
+    | '/gerente/clientes'
     | '/gerente/dashboard'
     | '/gerente/financas'
+    | '/gerente/funcionarios'
+    | '/gerente/historico'
+    | '/gerente/maquinas'
+    | '/gerente/promocoes'
+    | '/gerente/relatorios'
     | '/gerente/sessoes'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -119,8 +179,14 @@ export interface FileRouteTypes {
     | '/atendente/dashboard'
     | '/atendente/fila'
     | '/atendente/maquinas'
+    | '/gerente/clientes'
     | '/gerente/dashboard'
     | '/gerente/financas'
+    | '/gerente/funcionarios'
+    | '/gerente/historico'
+    | '/gerente/maquinas'
+    | '/gerente/promocoes'
+    | '/gerente/relatorios'
     | '/gerente/sessoes'
   id:
     | '__root__'
@@ -130,8 +196,14 @@ export interface FileRouteTypes {
     | '/atendente/dashboard'
     | '/atendente/fila'
     | '/atendente/maquinas'
+    | '/gerente/clientes'
     | '/gerente/dashboard'
     | '/gerente/financas'
+    | '/gerente/funcionarios'
+    | '/gerente/historico'
+    | '/gerente/maquinas'
+    | '/gerente/promocoes'
+    | '/gerente/relatorios'
     | '/gerente/sessoes'
   fileRoutesById: FileRoutesById
 }
@@ -142,8 +214,14 @@ export interface RootRouteChildren {
   AtendenteDashboardRoute: typeof AtendenteDashboardRoute
   AtendenteFilaRoute: typeof AtendenteFilaRoute
   AtendenteMaquinasRoute: typeof AtendenteMaquinasRoute
+  GerenteClientesRoute: typeof GerenteClientesRoute
   GerenteDashboardRoute: typeof GerenteDashboardRoute
   GerenteFinancasRoute: typeof GerenteFinancasRoute
+  GerenteFuncionariosRoute: typeof GerenteFuncionariosRoute
+  GerenteHistoricoRoute: typeof GerenteHistoricoRoute
+  GerenteMaquinasRoute: typeof GerenteMaquinasRoute
+  GerentePromocoesRoute: typeof GerentePromocoesRoute
+  GerenteRelatoriosRoute: typeof GerenteRelatoriosRoute
   GerenteSessoesRoute: typeof GerenteSessoesRoute
 }
 
@@ -170,6 +248,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GerenteSessoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gerente/relatorios': {
+      id: '/gerente/relatorios'
+      path: '/gerente/relatorios'
+      fullPath: '/gerente/relatorios'
+      preLoaderRoute: typeof GerenteRelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerente/promocoes': {
+      id: '/gerente/promocoes'
+      path: '/gerente/promocoes'
+      fullPath: '/gerente/promocoes'
+      preLoaderRoute: typeof GerentePromocoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerente/maquinas': {
+      id: '/gerente/maquinas'
+      path: '/gerente/maquinas'
+      fullPath: '/gerente/maquinas'
+      preLoaderRoute: typeof GerenteMaquinasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerente/historico': {
+      id: '/gerente/historico'
+      path: '/gerente/historico'
+      fullPath: '/gerente/historico'
+      preLoaderRoute: typeof GerenteHistoricoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerente/funcionarios': {
+      id: '/gerente/funcionarios'
+      path: '/gerente/funcionarios'
+      fullPath: '/gerente/funcionarios'
+      preLoaderRoute: typeof GerenteFuncionariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gerente/financas': {
       id: '/gerente/financas'
       path: '/gerente/financas'
@@ -182,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/gerente/dashboard'
       fullPath: '/gerente/dashboard'
       preLoaderRoute: typeof GerenteDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerente/clientes': {
+      id: '/gerente/clientes'
+      path: '/gerente/clientes'
+      fullPath: '/gerente/clientes'
+      preLoaderRoute: typeof GerenteClientesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/atendente/maquinas': {
@@ -222,8 +342,14 @@ const rootRouteChildren: RootRouteChildren = {
   AtendenteDashboardRoute: AtendenteDashboardRoute,
   AtendenteFilaRoute: AtendenteFilaRoute,
   AtendenteMaquinasRoute: AtendenteMaquinasRoute,
+  GerenteClientesRoute: GerenteClientesRoute,
   GerenteDashboardRoute: GerenteDashboardRoute,
   GerenteFinancasRoute: GerenteFinancasRoute,
+  GerenteFuncionariosRoute: GerenteFuncionariosRoute,
+  GerenteHistoricoRoute: GerenteHistoricoRoute,
+  GerenteMaquinasRoute: GerenteMaquinasRoute,
+  GerentePromocoesRoute: GerentePromocoesRoute,
+  GerenteRelatoriosRoute: GerenteRelatoriosRoute,
   GerenteSessoesRoute: GerenteSessoesRoute,
 }
 export const routeTree = rootRouteImport

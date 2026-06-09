@@ -32,9 +32,13 @@ export function EndSessionModal({
   const [pagamento, setPagamento] = useState<"dinheiro" | "pix" | "cartao" | "saldo">("dinheiro");
   const [obs, setObs] = useState("");
   const [busy, setBusy] = useState(false);
+  const [promos, setPromos] = useState<{ id: string; titulo: string | null; tipo: string | null; valor: number | null }[]>([]);
+  const [promoId, setPromoId] = useState<string>("");
 
   useEffect(() => {
-    if (!open) { setPagamento("dinheiro"); setObs(""); }
+    if (!open) { setPagamento("dinheiro"); setObs(""); setPromoId(""); return; }
+    supabase.from("promotions").select("id, titulo, tipo, valor").eq("ativo", true)
+      .then(({ data }) => setPromos((data as any) ?? []));
   }, [open]);
 
   if (!session) return null;
@@ -42,7 +46,10 @@ export function EndSessionModal({
   const ms = elapsedMs(session.inicio);
   const dur = fmtDuration(ms);
   const minutos = Math.max(1, Math.round(ms / 60000));
-  const valor = computeValor(session.inicio, preco);
+  const subtotal = computeValor(session.inicio, preco);
+  const promo = promos.find((p) => p.id === promoId);
+  const desconto = promo?.tipo === "desconto" && promo.valor ? subtotal * (Number(promo.valor) / 100) : 0;
+  const valor = Math.max(0, subtotal - desconto);
 
   const confirm = async () => {
     setBusy(true);

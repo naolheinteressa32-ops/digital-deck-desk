@@ -119,7 +119,26 @@ export function EndSessionModal({
             <div><div className="text-slate-500 text-xs">Cliente</div><div>{session.customer?.nome ?? "Avulso"}</div></div>
             <div><div className="text-slate-500 text-xs">Máquina</div><div>{session.machine?.nome ?? "—"}</div></div>
             <div><div className="text-slate-500 text-xs">Duração</div><div className="font-mono">{dur}</div></div>
-            <div><div className="text-slate-500 text-xs">Valor</div><div className="text-violet-300 font-semibold">{BRL(valor)}</div></div>
+            <div>
+              <div className="text-slate-500 text-xs">Valor {desconto > 0 ? `(- ${BRL(desconto)})` : ""}</div>
+              <div className="text-violet-300 font-semibold">{BRL(valor)}</div>
+            </div>
+          </div>
+
+          <div>
+            <Label>Aplicar promoção</Label>
+            <select
+              value={promoId}
+              onChange={(e) => setPromoId(e.target.value)}
+              className="mt-1 w-full rounded-md bg-slate-800 border border-slate-700 px-3 py-2 text-sm"
+            >
+              <option value="">Sem promoção</option>
+              {promos.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.titulo}{p.tipo === "desconto" && p.valor ? ` — ${p.valor}% off` : p.valor != null ? ` — ${p.valor}` : ""}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>

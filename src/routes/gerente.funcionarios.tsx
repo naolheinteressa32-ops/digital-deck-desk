@@ -159,7 +159,7 @@ function ProfileModal({ emp, onClose, onChanged }: { emp: Emp | null; onClose: (
       const { data: sess } = await supabase
         .from("sessions")
         .select("inicio, valor_total")
-        .eq("attendant_id", emp.profile_id)
+        .eq("attendant_id", emp.profile_id as string)
         .gte("inicio", since);
       const rows = (sess ?? []) as any[];
       const total = rows.length;

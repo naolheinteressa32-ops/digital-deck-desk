@@ -17,7 +17,12 @@ export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const pathnameRef = useRef(pathname);
   const hadSessionRef = useRef(false);
+
+  useEffect(() => {
+    pathnameRef.current = pathname;
+  }, [pathname]);
 
   useEffect(() => {
     let mounted = true;
@@ -53,7 +58,11 @@ export function useAuth() {
       if (!session) {
         setUser(null);
         setLoading(false);
-        if (hadSessionRef.current && event === "SIGNED_OUT" && pathname !== "/login") {
+        if (
+          hadSessionRef.current &&
+          event === "SIGNED_OUT" &&
+          pathnameRef.current !== "/login"
+        ) {
           toast.error("Sessão expirada. Faça login novamente.");
           navigate({ to: "/login" });
         }
@@ -68,7 +77,8 @@ export function useAuth() {
       mounted = false;
       sub.subscription.unsubscribe();
     };
-  }, [navigate, pathname]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { user, loading };
 }

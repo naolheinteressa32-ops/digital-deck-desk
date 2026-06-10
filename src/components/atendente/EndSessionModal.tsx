@@ -108,7 +108,7 @@ export function EndSessionModal({
       onEnded?.();
       onOpenChange(false);
     } catch (e: any) {
-      toast.error(e.message ?? "Erro ao encerrar.");
+      toastError(e, "Erro ao encerrar.");
     } finally {
       setBusy(false);
     }

@@ -172,10 +172,25 @@ export function EndSessionModal({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>Cancelar</Button>
-          <Button onClick={confirm} disabled={busy} className="bg-violet-600 hover:bg-violet-700">{busy ? "Encerrando..." : "Confirmar"}</Button>
+          <Button variant="secondary" onClick={() => onOpenChange(false)} disabled={busy}>Cancelar</Button>
+          <LoadingButton
+            loading={busy}
+            onClick={() => setConfirmOpen(true)}
+            className="bg-violet-600 hover:bg-violet-700"
+          >
+            Encerrar
+          </LoadingButton>
         </DialogFooter>
       </DialogContent>
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Confirmar encerramento?"
+        description={<>Valor a cobrar: <strong className="text-violet-300">{BRL(valor)}</strong>{pagamento === "saldo" ? " (descontado do saldo)" : ""}.</>}
+        confirmLabel="Encerrar sessão"
+        loading={busy}
+        onConfirm={async () => { await confirm(); setConfirmOpen(false); }}
+      />
     </Dialog>
   );
 }

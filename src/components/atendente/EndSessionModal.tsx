@@ -37,6 +37,7 @@ export function EndSessionModal({
   const [busy, setBusy] = useState(false);
   const [promos, setPromos] = useState<{ id: string; titulo: string | null; tipo: string | null; valor: number | null }[]>([]);
   const [promoId, setPromoId] = useState<string>("");
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
     if (!open) { setPagamento("dinheiro"); setObs(""); setPromoId(""); return; }

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { LoadingButton } from "@/components/ui/loading-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { toastError } from "@/lib/supabase-errors";
 import { useAuth } from "@/hooks/use-auth";
 
 type Customer = { id: string; nome: string; cpf: string | null; saldo: number };
@@ -74,7 +76,7 @@ export function StartSessionModal({
       onStarted?.();
       onOpenChange(false);
     } catch (e: any) {
-      toast.error(e.message ?? "Erro ao iniciar sessão.");
+      toastError(e, "Erro ao iniciar sessão.");
     } finally {
       setBusy(false);
     }
@@ -137,8 +139,8 @@ export function StartSessionModal({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>Cancelar</Button>
-          <Button onClick={confirm} disabled={busy} className="bg-violet-600 hover:bg-violet-700">{busy ? "Iniciando..." : "Iniciar"}</Button>
+          <Button variant="secondary" onClick={() => onOpenChange(false)} disabled={busy}>Cancelar</Button>
+          <LoadingButton loading={busy} onClick={confirm} className="bg-violet-600 hover:bg-violet-700">Iniciar</LoadingButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 export type Role = "atendente" | "gerente";
@@ -13,6 +15,14 @@ export interface AuthUser {
 export function useAuth() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<AuthUser | null>(null);
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const pathnameRef = useRef(pathname);
+  const hadSessionRef = useRef(false);
+
+  useEffect(() => {
+    pathnameRef.current = pathname;
+  }, [pathname]);
 
   useEffect(() => {
     let mounted = true;
@@ -40,15 +50,26 @@ export function useAuth() {
         setLoading(false);
         return;
       }
+      hadSessionRef.current = true;
       loadProfile(s.user.id, s.user.email ?? null);
     });
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
         setUser(null);
         setLoading(false);
+        if (
+          hadSessionRef.current &&
+          event === "SIGNED_OUT" &&
+          pathnameRef.current !== "/login"
+        ) {
+          toast.error("Sessão expirada. Faça login novamente.");
+          navigate({ to: "/login" });
+        }
+        hadSessionRef.current = false;
         return;
       }
+      hadSessionRef.current = true;
       loadProfile(session.user.id, session.user.email ?? null);
     });
 
@@ -56,6 +77,7 @@ export function useAuth() {
       mounted = false;
       sub.subscription.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { user, loading };

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { LoadingButton } from "@/components/ui/loading-button";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { toastError } from "@/lib/supabase-errors";
 import { BRL, computeValor, fmtDuration, elapsedMs } from "@/lib/atendente-utils";
 import { useTick } from "@/hooks/use-tick";
 
@@ -34,6 +37,7 @@ export function EndSessionModal({
   const [busy, setBusy] = useState(false);
   const [promos, setPromos] = useState<{ id: string; titulo: string | null; tipo: string | null; valor: number | null }[]>([]);
   const [promoId, setPromoId] = useState<string>("");
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
     if (!open) { setPagamento("dinheiro"); setObs(""); setPromoId(""); return; }
@@ -104,7 +108,7 @@ export function EndSessionModal({
       onEnded?.();
       onOpenChange(false);
     } catch (e: any) {
-      toast.error(e.message ?? "Erro ao encerrar.");
+      toastError(e, "Erro ao encerrar.");
     } finally {
       setBusy(false);
     }
@@ -168,10 +172,25 @@ export function EndSessionModal({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>Cancelar</Button>
-          <Button onClick={confirm} disabled={busy} className="bg-violet-600 hover:bg-violet-700">{busy ? "Encerrando..." : "Confirmar"}</Button>
+          <Button variant="secondary" onClick={() => onOpenChange(false)} disabled={busy}>Cancelar</Button>
+          <LoadingButton
+            loading={busy}
+            onClick={() => setConfirmOpen(true)}
+            className="bg-violet-600 hover:bg-violet-700"
+          >
+            Encerrar
+          </LoadingButton>
         </DialogFooter>
       </DialogContent>
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="Confirmar encerramento?"
+        description={<>Valor a cobrar: <strong className="text-violet-300">{BRL(valor)}</strong>{pagamento === "saldo" ? " (descontado do saldo)" : ""}.</>}
+        confirmLabel="Encerrar sessão"
+        loading={busy}
+        onConfirm={async () => { await confirm(); setConfirmOpen(false); }}
+      />
     </Dialog>
   );
 }

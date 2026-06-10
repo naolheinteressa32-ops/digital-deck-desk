@@ -139,8 +139,8 @@ export function StartSessionModal({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>Cancelar</Button>
-          <Button onClick={confirm} disabled={busy} className="bg-violet-600 hover:bg-violet-700">{busy ? "Iniciando..." : "Iniciar"}</Button>
+          <Button variant="secondary" onClick={() => onOpenChange(false)} disabled={busy}>Cancelar</Button>
+          <LoadingButton loading={busy} onClick={confirm} className="bg-violet-600 hover:bg-violet-700">Iniciar</LoadingButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

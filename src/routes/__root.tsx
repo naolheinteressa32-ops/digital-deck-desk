@@ -86,6 +86,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Sistema de gestão para lan houses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "LanHouse Pro" },
+      { name: "twitter:description", content: "Sistema de gestão para lan houses." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0ac0d5c8-4590-49e4-ab24-6de331f8c7cc/id-preview-e66ee29f--60219610-8f2f-4a33-842c-42d9af520ce8.lovable.app-1781060337702.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0ac0d5c8-4590-49e4-ab24-6de331f8c7cc/id-preview-e66ee29f--60219610-8f2f-4a33-842c-42d9af520ce8.lovable.app-1781060337702.png" },
     ],
     links: [
       {

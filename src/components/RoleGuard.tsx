@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { useAuth, type Role } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -13,6 +13,7 @@ export function RoleGuard({
 }) {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const warnedRef = useRef(false);
 
   useEffect(() => {
     if (loading) return;
@@ -21,7 +22,14 @@ export function RoleGuard({
       return;
     }
     if (user.role !== role) {
-      toast.error("Acesso negado. Perfil incorreto para esta conta.");
+      if (!warnedRef.current) {
+        warnedRef.current = true;
+        toast.error(
+          role === "gerente"
+            ? "Acesso restrito ao gerente."
+            : "Esta área é exclusiva do atendente.",
+        );
+      }
       navigate({
         to: user.role === "gerente" ? "/gerente/dashboard" : "/atendente/dashboard",
       });
@@ -30,18 +38,8 @@ export function RoleGuard({
 
   if (loading || !user || user.role !== role) {
     return (
-      <div
-        className="flex min-h-screen items-center justify-center"
-        style={{ background: "#0a0a0b" }}
-      >
-        <div
-          style={{
-            fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-            fontSize: 12,
-            color: "rgba(255,255,255,0.4)",
-            letterSpacing: "0.2em",
-          }}
-        >
+      <div className="flex min-h-screen items-center justify-center bg-slate-950">
+        <div className="font-mono text-xs tracking-[0.2em] text-slate-500">
           CARREGANDO...
         </div>
       </div>
@@ -59,17 +57,7 @@ export function SignOutButton() {
         await supabase.auth.signOut();
         navigate({ to: "/login" });
       }}
-      style={{
-        background: "rgba(255,255,255,0.05)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderRadius: 6,
-        padding: "8px 14px",
-        color: "#fff",
-        fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-        fontSize: 11,
-        letterSpacing: "0.15em",
-        cursor: "pointer",
-      }}
+      className="rounded-md border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs font-medium tracking-wider text-slate-200 hover:bg-slate-700"
     >
       SAIR
     </button>

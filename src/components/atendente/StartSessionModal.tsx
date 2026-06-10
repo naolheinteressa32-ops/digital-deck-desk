@@ -76,7 +76,7 @@ export function StartSessionModal({
       onStarted?.();
       onOpenChange(false);
     } catch (e: any) {
-      toast.error(e.message ?? "Erro ao iniciar sessão.");
+      toastError(e, "Erro ao iniciar sessão.");
     } finally {
       setBusy(false);
     }
